@@ -29,7 +29,7 @@ function Registro() {
         
         const uid = r.user.uid;
 
-        const _ = await setDoc(doc(database, "User", uid), {CPU: "Unknown", MOBO: "Unknown", GPU: "Unknown", RAM: "Unknown"});
+        const _ = await setDoc(doc(database, "Perfil", uid), {Username: "", CPU: "Unknown", MOBO: "Unknown", GPU: "Unknown", RAM: "Unknown"});
 
         navigation.navigate("Login")
       } catch (e) {

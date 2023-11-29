@@ -10,6 +10,7 @@ import UserContext from "../context/context";
 const database = getFirestore(firebaseApp);
 
 function CompletarPerfil() {
+    const [Username, setUsername] = useState("");
     const [MOBO, setMOBO] = useState("");
     const [CPU, setCPU] = useState("");
     const [RAM, setRAM] = useState("");
@@ -22,12 +23,13 @@ function CompletarPerfil() {
 
     async function handle(){
       try {
-        if(CPU.length == 0 || RAM.length == 0 || MOBO.length == 0 || GPU.length == 0) {
+        if(Username.length === 0 || CPU.length == 0 || RAM.length == 0 || MOBO.length == 0 || GPU.length == 0) {
             setResult("Hay campos vacios");
             return;
         }
 
-        const _ = await updateDoc(doc(database, "User", context.user.uid), {
+        const _ = await updateDoc(doc(database, "Perfil", context.user.uid), {
+            Username: Username,
             CPU: CPU,
             MOBO: MOBO,
             GPU: GPU,
@@ -45,6 +47,7 @@ function CompletarPerfil() {
       <View style={styles.container}>
         <Text>Contanos mas sobre vos!</Text>
 
+        <TextInput placeholder="Nombre de usuario" onChangeText={(m) => setUsername(m)}/>
         <TextInput placeholder="MOBO" onChangeText={(m) => setMOBO(m)}/>
         <TextInput placeholder="CPU" onChangeText={(m) => setCPU(m)}/>
         <TextInput placeholder="RAM" onChangeText={(m) => setRAM(m)}/>

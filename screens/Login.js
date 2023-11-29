@@ -23,10 +23,12 @@ function Login() {
         const userLS = JSON.parse(localStorage.getItem("user"));
         console.log("USERLS", userLS);
     
-        if(userLS !== null) {
-            context.setUser(userLS);
-            navigation.navigate("Home");
-        }
+        if(userLS === null || userLS === undefined) return;
+
+        if(Object.keys(userLS).length === 0) return;
+
+        context.setUser(userLS);
+        navigation.navigate("Home");
     }, []);
 
     async function handle(){
