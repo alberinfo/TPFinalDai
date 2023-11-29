@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Home from './screens/Home.js'
+import Login from './screens/Login.js';
+import Registro from './screens/Registro.js';
+import CompletarPerfil from './screens/CompletarPerfil.js';
+import UserContext from './context/context.js';
+import { useEffect, useState } from 'react';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [user, setUser] = useState({});
+  const [computadoraUser, setComputadoraUser] = useState({});
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user])
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <UserContext.Provider value={{user, setUser, computadoraUser, setComputadoraUser}}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={Login}/>
+          <Stack.Screen name="Registro" component={Registro}/>
+          <Stack.Screen name="CompletarPerfil" component={CompletarPerfil}/>
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </UserContext.Provider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
